@@ -1,0 +1,81 @@
+body {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+
+.largeImg {
+    width: 60px;
+    margin: 20px;
+    margin-bottom: 40px;
+}
+
+.nav-options {
+    margin: 0px 10px;
+    color: black;
+}
+
+.nav-options:hover {
+    text-decoration: none;
+    color: #F2994A;
+}
+
+.active {
+    color: #f2994a;
+}
+
+.btn-lg {
+    width: 200px;
+    height: 120px;
+    font-size: 20px;
+    margin: 40px 50px;
+
+}
+
+.btn:active {
+    outline: none;
+}
+
+.main-btn {
+    text-align: center;
+    color: #F2994A;
+    box-shadow: 5px 5px 8px #808080;
+
+}
+
+.main-btn:hover {
+    background-image: linear-gradient(to right, #F2994A, #F2C94C);
+    color: black;
+
+}
+
+.btn-outline-th {
+    background-color: #fff;
+    border-color: #f2994a;
+    color: #f2994a;
+}
+
+.btn-outline-th:hover {
+    transition-duration: 0.1s;
+    border-color: #fff;
+    color: #fff;
+    background-image: linear-gradient(to right, #f2994a, #f2c94c);
+}
+
+.center {
+    text-align: center;
+}
+
+.delete-btn {
+    margin: 0px 10px;
+    position: absolute;
+    vertical-align: baseline;
+    right: 0px;
+    bottom: 5px;
+
+}
+
+.list-group-item {
+    text-align: left;
+    height: 50px;
+    /* vertical-align: middle; */
+}

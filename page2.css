@@ -1,0 +1,63 @@
+body {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+a {
+  width: auto;
+  height: auto;
+}
+
+.droneList {
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fixed-top {
+  border: 1px black;
+}
+
+#droneListView {
+  text-align: left;
+}
+
+.center {
+  text-align: center;
+}
+
+.connect {
+  position: absolute;
+  right: 10;
+  bottom: 20;
+}
+
+.navicons {
+  width: 20px;
+  margin-right: 15px;
+}
+
+.navicons:hover {
+  opacity: 0.5;
+}
+
+.btn-outline-th {
+  background-color: #fff;
+  border-color: #f2994a;
+  color: #f2994a;
+}
+
+.btn-outline-th:hover {
+  transition-duration: 0.1s;
+  border-color: #fff;
+  color: #fff;
+  background-image: linear-gradient(to right, #f2994a, #f2c94c);
+}
+
+.list-group-item {
+  min-width: 400px;
+  max-width: 500px;
+  word-wrap: break-word;
+  margin-right: auto;
+  margin-left: auto;
+}

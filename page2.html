@@ -1,0 +1,87 @@
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Thanos File Deployment Service</title>
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+  <link rel="stylesheet" href="./mylibs/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="page2.css" />
+
+  <script>
+    window.$ = window.jQuery = require("./mylibs/jquery.min.js");
+  </script>
+  <script type="text/javascript" src="./mylibs/popper.min.js"></script>
+  <script type="text/javascript" src="./mylibs/bootstrap/bootstrap.min.js"></script>
+
+  <script type="text/javascript" src="./page2.js"></script>
+</head>
+
+<body class="align-items-center justify-content-center">
+  <br />
+  <nav class="navbar fixed-top" style="background-color: #fff;">
+    <img src=" assets/tlogo.jpg" style="width: 120px; margin-left: 10px; margin-top: 0px;" />
+    <div style="text-align: right;">
+      <a href="./index.html" data-toggle="tooltip" data-placement="left" title="Log out"><img class="navicons"
+          src="./assets/logout.svg" /></a>
+    </div>
+  </nav>
+
+  <br />
+
+  <br />
+  <br />
+
+  <div class="container" style="text-align: center;">
+    <h2 id="wifiSSID"></h2>
+  </div>
+  <br />
+  <div class="droneList center">
+    <h4>Devices on this Wi-Fi</h4>
+    <ul id="droneListView" class="list-group text-center">
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border text-secondary" role="status"></div>
+      </div>
+    </ul>
+    <br />
+    <p id="tryAdv" style="display: none;">Unable to find your drone?<br/>Try Advanced Search!</p>
+    <br/>
+    <br/>
+    <button class="btn btn-outline-secondary" onclick="refresh()">
+      Refresh
+    </button> <button class="btn btn-outline-th" data-toggle="modal" data-target="#advSearch" >Advanced Search</button>
+    <br />
+  </div>
+
+  <!-- Advanced Search Modal  -->
+  <div class="modal fade" id="advSearch" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Advanced Search</h4>
+        </div>
+        <div class="modal-body" style="text-align: center;">
+          <p>Could not find your drone? <br/>If you know your drone's IP address, you can use advanced search to connect to your drone.</p>
+          <input style="width:400px; margin-left:5px;" type="text" id="given_ip" placeholder="Enter IP Address">
+
+          <div id="advMod" class="text-center">
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button onclick="advSearch()" type="button" class="btn btn-outline-th">
+            Search
+          </button>
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- Advanced Search Modal ends here -->
+</body>
+<!-- <input style="width:400px; margin-left:5px;" type="text" id="given_ip" placeholder="Enter IP Address"> -->
+
+</html>

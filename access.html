@@ -1,0 +1,486 @@
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Thanos Drone Access</title>
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
+  <link rel="stylesheet" href="./mylibs/bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="access.css" />
+
+  <script>
+    window.$ = window.jQuery = require("./mylibs/jquery.min.js");
+  </script>
+
+  <script type="text/javascript" src="./mylibs/popper.min.js"></script>
+  <script type="text/javascript" src="./mylibs/bootstrap/bootstrap.min.js"></script>
+  <script type="text/javascript" src="./access.js"></script>
+</head>
+
+<body class="align-items-center justify-content-center">
+
+  <!-- NAV BAR FOR ACCESSING MULTIPLE PAGES -->
+  <nav class="navbar fixed-top" style="background-color: #fff;">
+    <div style="text-align: left;">
+      <img src=" assets/tlogo.jpg" style="width: 120px; margin-left: 10px; margin-top: 0px;" />
+    </div>
+
+    <div class="btn-group ">
+      <a href="#" id="home-nav" class="nav-options active" onclick="showHomeButtons()">Home</a>
+      <a href="#" id="key-nav" class="nav-options" onclick="showKeyButtons()">Key Actions</a>
+      <a href="#" id="pa-nav" class="nav-options" onclick="showPAButtons()">PA Actions</a>
+      <a href="#" id="log-nav" class="nav-options" onclick="showLogsButtons()">Flight Logs</a>
+      <a href="#" id="dev-nav" class="nav-options" onclick="showDevButtons()">Developer Options</a>
+      <a href="./index.html" class="nav-options">Log Out</a>
+    </div>
+  </nav>
+  <!-- NAV BAR ENDS HERE -->
+  <br />
+  <br />
+
+  <div class="container center">
+
+    <!-- HOME BUTTONS -->
+    <div id="Home_buttons" class="row justify-content-center align-items-center" style="display: block;">
+      <button class="btn btn-lg main-btn" data-toggle="modal" data-target="#fileUploadModal">
+        <img class="largeImg" src="./assets/share.png" /><br />
+        Send PA file
+      </button>
+      <button class="btn btn-lg main-btn" onclick="execListDir()" data-toggle="modal"
+        data-target="#dlogsModal">
+        <img class="largeImg" src="./assets/dload.png" /><br />
+        Download Logs
+      </button>
+      <button class="btn btn-lg main-btn" onclick="getPK()">
+        <img class="largeImg" src="./assets/keys.png" /><br />
+        Get Public Keys
+      </button>
+      <button class="btn btn-lg main-btn" data-toggle="modal" data-target="#certUploadModal">
+        <img class="largeImg" src="./assets/upload.png" /><br />
+        Upload Certificate
+      </button>
+      <br />
+    </div>
+    <!-- HOME BUTTONS END HERE -->
+
+    <!-- LOGS BUTTONS -->
+    <div id="Logs_buttons" class="row justify-content-center align-items-center" style="display: none;">
+      <button class="btn btn-lg main-btn" onclick="execListDir()" data-toggle="modal"
+        data-target="#dlogsModal">
+        <img class="largeImg" src="./assets/dload.png" /><br />
+        Download Logs
+      </button>
+      <button id="getKeysbtn" class="btn btn-lg main-btn" onclick="execLogs()">
+        <img class="largeImg" id="getKeys" src="./assets/clear.png" /><br />
+        Clear Flight Logs
+      </button>
+      <br />
+    </div>
+    <!-- HOME BUTTONS END HERE -->
+
+    <!-- PUBLIC KEY BUTTONS -->
+    <div id="Key_buttons" class="row justify-content-center align-items-center" style="display: none;">
+      <br />
+      <br />
+      <button class="btn btn-lg main-btn" onclick="execGenKey()">
+        <img class="largeImg" src="./assets/create.png" /><br />Generate Keys
+      </button>
+      <button class="btn btn-lg main-btn" onclick="getPK()">
+        <img class="largeImg" src="./assets/keys.png" /><br />
+        Get Public Keys
+      </button>
+      <br />
+      <br />
+    </div>
+    <!-- PUBLIC KEY BUTTONS END HERE -->
+
+    <!-- PERMISSION ARTIFACT BUTTONS -->
+    <div id="PA_buttons" class="row justify-content-center" style="display: none;">
+      <button class="btn btn-lg main-btn" onclick="getDelList()" data-toggle="modal" data-target="#displayListModal">
+        <img class="largeImg" src="./assets/delete.png" /><br />
+        Delete PA files
+      </button>
+      <button class="btn btn-lg main-btn" onclick="getPAfiles()" data-toggle="modal" data-target="#extractPAModal">
+        <img class="largeImg" src="./assets/get.png" /><br />
+        Extract PA files
+      </button>
+      <button id="getKeysbtn" class="btn btn-lg main-btn" onclick="getVerifyList()" data-toggle="modal"
+        data-target="#verifyModal">
+        <img class="largeImg" id="getKeys" src="./assets/verify.png" /><br />
+        Verify PA file
+      </button>
+      <button class="btn btn-lg main-btn" data-toggle="modal" data-target="#fileUploadModal">
+        <img class="largeImg" src="./assets/share.png" /><br />
+        Send PA file
+      </button>
+    </div>
+    <!-- PERMISSION ARTIFACT BUTTONS END HERE -->
+
+    <!-- DEVELOPER BUTTONS -->
+    <div id="Dev_buttons" class="row justify-content-center align-items-center" style="display: none;">
+      <br />
+      <br />
+      <button class="btn btn-lg main-btn" data-toggle="modal" data-target="#sendDataModal">
+        <img class="largeImg" src="./assets/share.png" /><br />Send Data
+      </button>
+      <button class="btn btn-lg main-btn" onclick="devGet()" data-toggle="modal" data-target="#DevDModal">
+        <img class="largeImg" src="./assets/get.png" /><br />
+        Extract Data
+      </button>
+      <br />
+      <br />
+    </div>
+    <!-- DEVELOPER BUTTONS END HERE -->
+
+    <br />
+    <a href="./page2.html" class="btn btn-outline-th">Back</a>
+  </div>
+
+  <!-- File Upload Modal  -->
+  <div class="modal fade" id="fileUploadModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">File Upload</h4>
+        </div>
+        <div class="modal-body">
+          <p>Please select a file to upload.</p>
+          <form id="form1" style="text-align: center;">
+            <input id="filename" type="file" accept="application/xml,application/zip"/>
+            <button class="btn btn-outline-th" onclick="submittingForm()" type="button">
+              Upload
+            </button>
+          </form>
+
+          <div class="text-center">
+            <div id="uploadSpinner" class="spinner-border spinner-border-sm" role="status" style="display: none;">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- File Upload Modal ends here -->
+
+  <!-- Verify Dropdown Modal  -->
+  <div class="modal fade" id="verifyModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Verify PA file</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="text-center">
+            <div id="verifySpinner" class="spinner-border spinner-border-sm" role="status">
+            </div>
+            <form id="verifyform" style="text-align: center;display: none;">
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Select the PA file that has to be verified.</label>
+                <select id="verifySelect" class="form-control">
+
+                </select>
+              </div>
+
+              <button id="verifybtn" class="btn btn-outline-th" onclick="execVerify()" type="button">
+                Verify
+              </button>
+            </form>
+
+            <div id="textVerify">
+
+            </div>
+
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Verify Dropdown Modal ends here -->
+
+
+  <!-- Cert Upload Modal -->
+  <div class="modal fade" id="certUploadModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">DGCA Certificate Upload</h4>
+        </div>
+        <div class="modal-body">
+          <p>Please select a file to upload.</p>
+          <form id="form1" style="text-align: center;">
+            <input id="certfile" type="file" accept="application/crt,application/cer"/>
+            <button class="btn btn-outline-th" onclick="uploadCert()" type="button">
+              Upload
+            </button>
+          </form>
+
+          <div class="text-center">
+            <div id="certuploadSpinner" class="spinner-border spinner-border-sm" role="status" style="display: none;">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Cert Upload Modal ends here -->
+
+  <!-- Send Data Modal  -->
+  <div class="modal fade" id="sendDataModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Data Upload</h4>
+        </div>
+        <div class="modal-body text-center">
+          <p>Please select a data file to upload.</p>
+          <form id="form1" style="text-align: center;">
+            <input id="devfile" type="file" />
+            <button class="btn btn-outline-th" onclick="devPut()" type="button">
+              Upload
+            </button>
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Send Data Modal ends here -->
+
+  <!-- Delete List Modal  -->
+  <div class="modal fade" id="displayListModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Delete file</h4>
+        </div>
+        <div class="modal-body">
+          <div class="text-center">
+
+            <div id="delSpinner" class="spinner-border spinner-border-sm" role="status">
+            </div>
+            <form id="delform" style="text-align: center;display: none;">
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Select the PA file that has to be deleted.</label>
+                <select id="delSelect" class="form-control">
+
+                </select>
+              </div>
+
+              <button id="delbtn" class="btn btn-outline-th" onclick="execDelete()" type="button">
+                Delete
+              </button>
+            </form>
+            <div id="textDelete">
+
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger" onclick="execDeleteAll()">
+            Delete All
+          </button>
+
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- Delete List Modal ends here -->
+
+  <!-- Download Logs Modal  -->
+  <div class="modal fade" id="dlogsModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Download log files</h4>
+        </div>
+        <div class="modal-body">
+          <!-- <button class="btn btn-outline-th" onclick="getLogs()">Refresh</button>
+          <br />
+          <br />
+          <div id="logList" class="text-center">
+
+          </div> -->
+
+          <div class="text-center">
+
+            <div id="DlogsSpinner" class="spinner-border spinner-border-sm" role="status">
+            </div>
+            <form id="Dlogsform" style="text-align: center;display: none;">
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Select the log file that has to be downloaded.</label>
+                <select id="DlogsSelect" class="form-control">
+
+                </select>
+              </div>
+
+              <button id="Dlogsbtn" class="btn btn-outline-th" onclick="execDownloadLogs()" type="button">
+                Download
+              </button>
+            </form>
+            <div id="textDlogs">
+
+            </div>
+
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-th" onclick="execBundle()">
+            Download bundle
+          </button>
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- Download Logs Modal ends here -->
+
+  <!-- Download Dev Data Modal  -->
+  <div class="modal fade" id="DevDModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Download Developer files</h4>
+        </div>
+        <div class="modal-body" style="text-align: center;">
+          <button class="btn btn-outline-th" onclick="devGet()">Refresh</button>
+          <br />
+          <br />
+          <div id="devDList" class="text-center">
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- Download Dev Data Modal ends here -->
+
+  <!-- PA File Extract Modal  -->
+  <div class="modal fade" id="extractPAModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Extract PA files</h4>
+        </div>
+        <div class="modal-body">
+          <div class="text-center">
+
+            <div id="extPASpinner" class="spinner-border spinner-border-sm" role="status">
+            </div>
+            <form id="extPAform" style="text-align: center;display: none;">
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Select the PA file that has to be deleted.</label>
+                <select id="extPASelect" class="form-control">
+
+                </select>
+              </div>
+
+              <button id="extPAbtn" class="btn btn-outline-th" onclick="execExtractPA()" type="button">
+                Download
+              </button>
+            </form>
+            <div id="textExtPA">
+
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- PA file Extract Modal ends here -->
+
+  <!-- Get Public Keys Modal  -->
+  <div class="modal fade" id="getPKModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Fetching Public Keys</h4>
+        </div>
+        <div class="modal-body" style="text-align: center;">
+          <button class="btn btn-outline-th" onclick="getPK()">Refresh</button>
+          <br />
+          <br />
+          <div id="pkList" class="text-center">
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- Get Public Keys Modal ends here -->
+
+  <!-- Generate Keys Loader -->
+  <div class="modal fade" id="genLoader" role="dialog" style="margin: auto;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body text-center">
+          <p>Please wait.. <br />This may take several minutes.</p>
+          <div class="text-center">
+            <div class="spinner-border spinner-border-sm" role="status">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Generate Keys Loader ends here -->
+
+</body>
+
+</html>
